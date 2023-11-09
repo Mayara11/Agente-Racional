@@ -48,6 +48,18 @@ public class AgenteRacional {
             return false;
         }
 
+        private boolean todasAsCelulasEstaoLimpa() {
+            for (char[] linha : estadoQuarto) {
+                for (char celula : linha) {
+                    if (celula == 'S') {
+                        return false;
+                    }
+                }
+            }
+            System.out.println("O quarto está limpo!");
+            return true;
+        }
+
         public void moverAgente(char direcao) {
             int novoPosX = posicaoAgente.x;
             int novoPosY = posicaoAgente.y;
@@ -153,6 +165,14 @@ public class AgenteRacional {
                 posicaoAgente.y--;
             }
             return rota.toString();
+        }
+
+        private static void testarObjetivo(Quarto quarto, char posicaoAgente) {
+            if (quarto.todasAsCelulasEstaoLimpa() && posicaoAgente == 'A') {
+                System.out.println("O objetivo foi alcançado!");
+            } else {
+                System.out.println("O objetivo não foi alcançado!");
+            }
         }
     }
 }
