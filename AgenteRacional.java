@@ -103,107 +103,107 @@ public class AgenteRacional {
             int y = posicaoAgente.y;
             estadoQuarto[y][x] = 'L';
         }
+    }
 
-        public static void main(String[] args) {
-            char[][] ambiente = new char[][] {
-                    { 'A', 'B', 'C', 'D' },
-                    { 'E', 'F', 'G', 'H' },
-                    { 'I', 'J', 'K', 'L' },
-                    { 'M', 'N', 'O', 'P' }
-            };
+    public static void main(String[] args) {
+        char[][] ambiente = new char[][] {
+                { 'A', 'B', 'C', 'D' },
+                { 'E', 'F', 'G', 'H' },
+                { 'I', 'J', 'K', 'L' },
+                { 'M', 'N', 'O', 'P' }
+        };
 
-            char[] pontosSujos = { 'C', 'F', 'H', 'I', 'K', 'M', 'O' };
+        char[] pontosSujos = { 'C', 'F', 'H', 'I', 'K', 'M', 'O' };
 
-            Quarto quarto = new Quarto(ambiente, pontosSujos);
+        Quarto quarto = new Quarto(ambiente, pontosSujos);
 
-            while (quarto.energia > 0) {
-                char posicaoAtual = quarto.ambiente[quarto.posicaoAgente.y][quarto.posicaoAgente.x];
-                System.out.println("Posição do agente: " + posicaoAtual);
+        while (quarto.energia > 0) {
+            char posicaoAtual = quarto.ambiente[quarto.posicaoAgente.y][quarto.posicaoAgente.x];
+            System.out.println("Posição do agente: " + posicaoAtual);
 
-                char acao = determinarAcao(quarto);
+            char acao = determinarAcao(quarto);
 
-                switch (acao) {
-                    case 'M':
-                        char direcao = determinarDirecao(quarto.posicaoAgente, quarto.estadoQuarto);
-                        quarto.moverAgente(direcao);
-                        quarto.energia--;
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        private static char determinarAcao(Quarto quarto) {
-            if (quarto.bolsa == 10) {
-                return 'V';
-            }
-            if (quarto.temSujeira()) {
-                return 'L';
-            }
-            return 'M';
-        }
-
-        private static char determinarDirecao(Coordenadas posicaoAgente, char[][] estadoQuarto) {
-            Random random = new Random();
-            char[] direcoesPossiveis = { 'N', 'S', 'L', 'O' };
-            List<Character> direcoesDisponiveis = new ArrayList<>();
-
-            for (char direcao : direcoesPossiveis) {
-                if (direcaoLevaASujeira(direcao, posicaoAgente, estadoQuarto)) {
-                    direcoesDisponiveis.add(direcao);
-                }
-            }
-
-            if (direcoesDisponiveis.isEmpty()) {
-                return direcoesPossiveis[random.nextInt(4)];
-            }
-
-            return direcoesDisponiveis.get(random.nextInt(direcoesDisponiveis.size()));
-        }
-
-        private static boolean direcaoLevaASujeira(char direcao, Coordenadas posicaoAgente, char[][] estadoQuarto) {
-            int novoPosX = posicaoAgente.x;
-            int novoPosY = posicaoAgente.y;
-
-            switch (direcao) {
-                case 'N':
-                    novoPosY--;
+            switch (acao) {
+                case 'M':
+                    char direcao = determinarDirecao(quarto.posicaoAgente, quarto.estadoQuarto);
+                    quarto.moverAgente(direcao);
+                    quarto.energia--;
                     break;
-                case 'S':
-                    novoPosY++;
-                    break;
-                case 'L':
-                    novoPosX++;
-                    break;
-                case 'O':
-                    novoPosX--;
+                default:
                     break;
             }
+        }
+    }
 
-            return novoPosX >= 0 && novoPosX < estadoQuarto[0].length && novoPosY >= 0 && novoPosY < estadoQuarto.length
-                    && estadoQuarto[novoPosY][novoPosX] == 'S';
+    private static char determinarAcao(Quarto quarto) {
+        if (quarto.bolsa == 10) {
+            return 'V';
+        }
+        if (quarto.temSujeira()) {
+            return 'L';
+        }
+        return 'M';
+    }
+
+    private static char determinarDirecao(Coordenadas posicaoAgente, char[][] estadoQuarto) {
+        Random random = new Random();
+        char[] direcoesPossiveis = { 'N', 'S', 'L', 'O' };
+        List<Character> direcoesDisponiveis = new ArrayList<>();
+
+        for (char direcao : direcoesPossiveis) {
+            if (direcaoLevaASujeira(direcao, posicaoAgente, estadoQuarto)) {
+                direcoesDisponiveis.add(direcao);
+            }
         }
 
-        private static String identificarRotaDeVolta(Coordenadas posicaoAgente) {
-            StringBuilder rota = new StringBuilder();
-            while (posicaoAgente.x > 0) {
-                rota.append('O');
-                posicaoAgente.x--;
-            }
-            while (posicaoAgente.y > 0) {
-                rota.append('N');
-                posicaoAgente.y--;
-            }
-            return rota.toString();
+        if (direcoesDisponiveis.isEmpty()) {
+            return direcoesPossiveis[random.nextInt(4)];
         }
 
-        private static void testarObjetivo(Quarto quarto, char posicaoAgente) {
-            if (quarto.todasAsCelulasEstaoLimpa() && posicaoAgente == 'A') {
-                System.out.println("O objetivo foi alcançado!");
-            } else {
-                System.out.println("O objetivo não foi alcançado!");
-            }
+        return direcoesDisponiveis.get(random.nextInt(direcoesDisponiveis.size()));
+    }
+
+    private static boolean direcaoLevaASujeira(char direcao, Coordenadas posicaoAgente, char[][] estadoQuarto) {
+        int novoPosX = posicaoAgente.x;
+        int novoPosY = posicaoAgente.y;
+
+        switch (direcao) {
+            case 'N':
+                novoPosY--;
+                break;
+            case 'S':
+                novoPosY++;
+                break;
+            case 'L':
+                novoPosX++;
+                break;
+            case 'O':
+                novoPosX--;
+                break;
+        }
+
+        return novoPosX >= 0 && novoPosX < estadoQuarto[0].length && novoPosY >= 0 && novoPosY < estadoQuarto.length
+                && estadoQuarto[novoPosY][novoPosX] == 'S';
+    }
+
+    private static String identificarRotaDeVolta(Coordenadas posicaoAgente) {
+        StringBuilder rota = new StringBuilder();
+        while (posicaoAgente.x > 0) {
+            rota.append('O');
+            posicaoAgente.x--;
+        }
+        while (posicaoAgente.y > 0) {
+            rota.append('N');
+            posicaoAgente.y--;
+        }
+        return rota.toString();
+    }
+
+    private static void testarObjetivo(Quarto quarto, char posicaoAgente) {
+        if (quarto.todasAsCelulasEstaoLimpa() && posicaoAgente == 'A') {
+            System.out.println("O objetivo foi alcançado!");
+        } else {
+            System.out.println("O objetivo não foi alcançado!");
         }
     }
 }
