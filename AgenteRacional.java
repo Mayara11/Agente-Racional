@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class AgenteRacional {
 
     private static class Coordenadas {
@@ -63,3 +67,45 @@ public class AgenteRacional {
             }
             return 'M';
         }
+
+        private static char determinarDirecao(Coordenadas posicaoAgente, char[][] estadoQuarto) {
+            Random random = new Random();
+            char[] direcoesPossiveis = { 'N', 'S', 'L', 'O' };
+            List<Character> direcoesDisponiveis = new ArrayList<>();
+
+            for (char direcao : direcoesPossiveis) {
+                if (direcaoLevaASujeira(direcao, posicaoAgente, estadoQuarto)) {
+                    direcoesDisponiveis.add(direcao);
+                }
+            }
+
+            if (direcoesDisponiveis.isEmpty()) {
+                return direcoesPossiveis[random.nextInt(4)];
+            }
+
+            return direcoesDisponiveis.get(random.nextInt(direcoesDisponiveis.size()));
+        }
+
+        private static boolean direcaoLevaASujeira(char direcao, Coordenadas posicaoAgente, char[][] estadoQuarto) {
+            int novoPosX = posicaoAgente.x;
+            int novoPosY = posicaoAgente.y;
+    
+            switch (direcao) {
+                case 'N':
+                    novoPosY--;
+                    break;
+                case 'S':
+                    novoPosY++;
+                    break;
+                case 'L':
+                    novoPosX++;
+                    break;
+                case 'O':
+                    novoPosX--;
+                    break;
+            }
+    
+            return novoPosX >= 0 && novoPosX < estadoQuarto[0].length && novoPosY >= 0 && novoPosY < estadoQuarto.length && estadoQuarto[novoPosY][novoPosX] == 'S';
+        }
+    }
+}
