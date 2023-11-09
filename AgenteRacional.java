@@ -47,6 +47,36 @@ public class AgenteRacional {
             return false;
         }
 
+        public void moverAgente(char direcao) {
+            int novoPosX = posicaoAgente.x;
+            int novoPosY = posicaoAgente.y;
+
+            switch (direcao) {
+                case 'N':
+                    if (novoPosY > 0) {
+                        novoPosY--;
+                    }
+                    break;
+                case 'S':
+                    if (novoPosY < 3) {
+                        novoPosY++;
+                    }
+                    break;
+                case 'L':
+                    if (novoPosX < 3) {
+                        novoPosX++;
+                    }
+                    break;
+                case 'O':
+                    if (novoPosX > 0) {
+                        novoPosX--;
+                    }
+                    break;
+            }
+
+            posicaoAgente = new Coordenadas(novoPosX, novoPosY);
+        }
+
         public static void main(String[] args) {
             char[][] ambiente = new char[][] {
                     { 'A', 'B', 'C', 'D' },
