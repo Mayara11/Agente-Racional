@@ -89,7 +89,7 @@ public class AgenteRacional {
         private static boolean direcaoLevaASujeira(char direcao, Coordenadas posicaoAgente, char[][] estadoQuarto) {
             int novoPosX = posicaoAgente.x;
             int novoPosY = posicaoAgente.y;
-    
+
             switch (direcao) {
                 case 'N':
                     novoPosY--;
@@ -104,8 +104,22 @@ public class AgenteRacional {
                     novoPosX--;
                     break;
             }
-    
-            return novoPosX >= 0 && novoPosX < estadoQuarto[0].length && novoPosY >= 0 && novoPosY < estadoQuarto.length && estadoQuarto[novoPosY][novoPosX] == 'S';
+
+            return novoPosX >= 0 && novoPosX < estadoQuarto[0].length && novoPosY >= 0 && novoPosY < estadoQuarto.length
+                    && estadoQuarto[novoPosY][novoPosX] == 'S';
+        }
+
+        private static String identificarRotaDeVolta(Coordenadas posicaoAgente) {
+            StringBuilder rota = new StringBuilder();
+            while (posicaoAgente.x > 0) {
+                rota.append('O');
+                posicaoAgente.x--;
+            }
+            while (posicaoAgente.y > 0) {
+                rota.append('N');
+                posicaoAgente.y--;
+            }
+            return rota.toString();
         }
     }
 }
