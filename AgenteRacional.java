@@ -1,5 +1,15 @@
 public class AgenteRacional {
 
+    private static class Coordenadas {
+        int x;
+        int y;
+
+        Coordenadas(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
     private static class Quarto {
         char[][] ambiente;
         char[][] estadoQuarto;
@@ -52,7 +62,4 @@ public class AgenteRacional {
                 return 'A';
             }
             return 'M';
-
         }
-    }
-}
