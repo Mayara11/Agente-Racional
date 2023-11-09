@@ -57,7 +57,6 @@ public class AgenteRacional {
                     }
                 }
             }
-            System.out.println("O quarto está limpo!");
             return true;
         }
 
@@ -89,6 +88,14 @@ public class AgenteRacional {
             }
 
             posicaoAgente = new Coordenadas(novoPosX, novoPosY);
+        }
+
+        public void voltarParaCasa(String rotaDeVolta) {
+            for (int i = 0; i < rotaDeVolta.length(); i++) {
+                char direcao = rotaDeVolta.charAt(i);
+                this.moverAgente(direcao);
+                this.energia--;
+            }
         }
 
         private boolean temSujeira() {
@@ -123,25 +130,31 @@ public class AgenteRacional {
 
             char acao = determinarAcao(quarto);
 
-            switch (acao) {
-                case 'M':
-                    char direcao = determinarDirecao(quarto.posicaoAgente, quarto.estadoQuarto);
-                    quarto.moverAgente(direcao);
-                    quarto.energia--;
-                    break;
-                case 'L':
-                    System.out.println("Sujeira encontrada e limpa em " + posicaoAtual);
-                    quarto.limparSujeira();
-                    quarto.bolsa++;
-                    quarto.energia--;
-                default:
-                    break;
+            if (acao == 'M') {
+                char direcao = determinarDirecao(quarto.posicaoAgente, quarto.estadoQuarto);
+                quarto.moverAgente(direcao);
+                quarto.energia--;
+            } else if (acao == 'L') {
+                System.out.println("Sujeira encontrada e limpa em " + posicaoAtual);
+                quarto.limparSujeira();
+                quarto.bolsa++;
+                quarto.energia--;
+            } else if (acao == 'V') {
+                System.out.println("Voltando para casa");
+                String rotaDeVolta = identificarRotaDeVolta(quarto.posicaoAgente);
+                System.out.println("Rota de volta para casa: " + rotaDeVolta);
+                quarto.voltarParaCasa(rotaDeVolta);
+                break;
             }
         }
+
+        testarObjetivo(quarto);
     }
 
     private static char determinarAcao(Quarto quarto) {
-        if (quarto.bolsa == 10) {
+        if (quarto.bolsa == 10 || quarto.todasAsCelulasEstaoLimpa()) {
+            if (quarto.todasAsCelulasEstaoLimpa())
+                System.out.println("O quarto está limpo!");
             return 'V';
         }
         if (quarto.temSujeira()) {
@@ -204,7 +217,8 @@ public class AgenteRacional {
         return rota.toString();
     }
 
-    private static void testarObjetivo(Quarto quarto, char posicaoAgente) {
+    private static void testarObjetivo(Quarto quarto) {
+        char posicaoAgente = quarto.ambiente[quarto.posicaoAgente.y][quarto.posicaoAgente.x];
         if (quarto.todasAsCelulasEstaoLimpa() && posicaoAgente == 'A') {
             System.out.println("O objetivo foi alcançado!");
         } else {
