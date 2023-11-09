@@ -25,6 +25,7 @@ public class AgenteRacional {
             this.ambiente = ambiente;
             this.estadoQuarto = new char[ambiente.length][ambiente[0].length];
             this.inicializarEstadoQuarto(pontosSujos);
+            this.posicaoAgente = new Coordenadas(0, 0);
         }
 
         private void inicializarEstadoQuarto(char[] pontosSujos) {
@@ -101,6 +102,24 @@ public class AgenteRacional {
             char[] pontosSujos = { 'C', 'F', 'H', 'I', 'K', 'M', 'O' };
 
             Quarto quarto = new Quarto(ambiente, pontosSujos);
+
+            while (quarto.energia > 0) {
+                char posicaoAtual = quarto.ambiente[quarto.posicaoAgente.y][quarto.posicaoAgente.x];
+                System.out.println("Posição do agente: " + posicaoAtual);
+
+                char acao = determinarAcao(quarto);
+
+                switch (acao) {
+                    case 'M':
+                        char direcao = determinarDirecao(quarto.posicaoAgente, quarto.estadoQuarto);
+                        quarto.moverAgente(direcao);
+                        quarto.energia--;
+                        break;
+
+                    default:
+                        break;
+                }
+            }
         }
 
         private static char determinarAcao(Quarto quarto) {
@@ -108,7 +127,7 @@ public class AgenteRacional {
                 return 'V';
             }
             if (temSujeira()) {
-                return 'A';
+                return 'L';
             }
             return 'M';
         }
