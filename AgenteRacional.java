@@ -91,6 +91,19 @@ public class AgenteRacional {
             posicaoAgente = new Coordenadas(novoPosX, novoPosY);
         }
 
+        private boolean temSujeira() {
+            int x = posicaoAgente.x;
+            int y = posicaoAgente.y;
+            return x >= 0 && x < estadoQuarto[0].length && y >= 0 && y < estadoQuarto.length
+                    && estadoQuarto[y][x] == 'S';
+        }
+
+        private void limparSujeira() {
+            int x = posicaoAgente.x;
+            int y = posicaoAgente.y;
+            estadoQuarto[y][x] = 'L';
+        }
+
         public static void main(String[] args) {
             char[][] ambiente = new char[][] {
                     { 'A', 'B', 'C', 'D' },
@@ -115,7 +128,6 @@ public class AgenteRacional {
                         quarto.moverAgente(direcao);
                         quarto.energia--;
                         break;
-
                     default:
                         break;
                 }
@@ -126,7 +138,7 @@ public class AgenteRacional {
             if (quarto.bolsa == 10) {
                 return 'V';
             }
-            if (temSujeira()) {
+            if (quarto.temSujeira()) {
                 return 'L';
             }
             return 'M';
