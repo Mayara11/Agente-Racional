@@ -22,13 +22,26 @@ public class AgenteRacional {
             }
         }
 
-        private static boolean contemPontoSujos(char[] pontosSujos, char ponto) {
+        private boolean contemPontoSujos(char[] pontosSujos, char ponto) {
             for (char sujeira : pontosSujos) {
                 if (sujeira == ponto) {
                     return true;
                 }
             }
             return false;
+        }
+
+        public static void main(String[] args) {
+            char[][] ambiente = new char[][]{
+                    {'A', 'B', 'C', 'D'},
+                    {'E', 'F', 'G', 'H'},
+                    {'I', 'J', 'K', 'L'},
+                    {'M', 'N', 'O', 'P'}
+            };
+    
+            char[] pontosSujos = {'C', 'F', 'H', 'I', 'K', 'M', 'O'};
+    
+            Quarto quarto = new Quarto(ambiente, pontosSujos);
         }
     }
 }
