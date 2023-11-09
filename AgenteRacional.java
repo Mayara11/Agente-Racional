@@ -129,6 +129,11 @@ public class AgenteRacional {
                     quarto.moverAgente(direcao);
                     quarto.energia--;
                     break;
+                case 'L':
+                    System.out.println("Sujeira encontrada e limpa em " + posicaoAtual);
+                    quarto.limparSujeira();
+                    quarto.bolsa++;
+                    quarto.energia--;
                 default:
                     break;
             }
