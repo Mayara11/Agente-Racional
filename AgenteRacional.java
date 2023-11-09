@@ -1,5 +1,5 @@
 public class AgenteRacional {
-    
+
     private static class Quarto {
         char[][] ambiente;
         char[][] estadoQuarto;
@@ -32,16 +32,27 @@ public class AgenteRacional {
         }
 
         public static void main(String[] args) {
-            char[][] ambiente = new char[][]{
-                    {'A', 'B', 'C', 'D'},
-                    {'E', 'F', 'G', 'H'},
-                    {'I', 'J', 'K', 'L'},
-                    {'M', 'N', 'O', 'P'}
+            char[][] ambiente = new char[][] {
+                    { 'A', 'B', 'C', 'D' },
+                    { 'E', 'F', 'G', 'H' },
+                    { 'I', 'J', 'K', 'L' },
+                    { 'M', 'N', 'O', 'P' }
             };
-    
-            char[] pontosSujos = {'C', 'F', 'H', 'I', 'K', 'M', 'O'};
-    
+
+            char[] pontosSujos = { 'C', 'F', 'H', 'I', 'K', 'M', 'O' };
+
             Quarto quarto = new Quarto(ambiente, pontosSujos);
+        }
+
+        private static char determinarAcao(Quarto quarto) {
+            if (bolsa = 10) {
+                return 'V';
+            }
+            if (temSujeira()) {
+                return 'A';
+            }
+            return 'M';
+
         }
     }
 }
