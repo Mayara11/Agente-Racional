@@ -17,11 +17,13 @@ public class AgenteRacional {
     private static class Quarto {
         char[][] ambiente;
         char[][] estadoQuarto;
+        Coordenadas posicaoAgente;
 
         Quarto(char[][] ambiente, char[] pontosSujos) {
             this.ambiente = ambiente;
             this.estadoQuarto = new char[ambiente.length][ambiente[0].length];
             this.inicializarEstadoQuarto(pontosSujos);
+            this.posicaoAgente = new Coordenadas(0, 0);
         }
 
         private void inicializarEstadoQuarto(char[] pontosSujos) {
