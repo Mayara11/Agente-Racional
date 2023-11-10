@@ -14,3 +14,6 @@ Agente Racional que limpa um quarto com o mínimo possível de ações, e o obje
 | Agente | Medida de Desempenho | Ambiente | Atuadores | Sensores |
 |--------|----------------------|----------|-----------|----------|
 | Aspirador de pó | Limpar todo o ambiente com o mínimo possível de ações e retornar à localização inicial | Área quadrada de 4 por 4, dividida em 16 localizações (A a P). Algumas localizações estão sujas e outras estão limpas. O agente pode se mover apenas para o Norte, Sul, Leste ou Oeste e não pode se mover diagonalmente | Capacidade de se mover em uma das quatro direções, aspirar a sujeira e voltar para casa | Capacidade de perceber a localização atual, se ela está suja ou limpa, e a capacidade do saco de sujeira |
+
+
+#git pull original <nome-brancg>
